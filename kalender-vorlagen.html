@@ -23,13 +23,7 @@
     --font: 'DM Sans', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100dvh;
-    padding-bottom: 32px;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100dvh; padding-bottom: 40px; }
   .app { max-width: 480px; margin: 0 auto; padding: 28px 16px 16px; }
 
   header { margin-bottom: 28px; }
@@ -40,44 +34,31 @@
   .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 5px; font-weight: 300; }
 
   .templates { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
-
   .t-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    display: flex; align-items: center; gap: 12px;
-    padding: 13px 14px;
-    position: relative; overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); display: flex; align-items: center; gap: 12px;
+    padding: 13px 14px; position: relative; overflow: hidden;
   }
   .t-card:active { background: var(--surface2); }
   .color-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 14px 0 0 14px; }
   .t-main { flex: 1; min-width: 0; padding-left: 4px; cursor: pointer; }
   .t-title { font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
-  .t-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+  .t-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .t-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .t-actions { display: flex; gap: 6px; flex-shrink: 0; }
   .btn-sm {
-    width: 34px; height: 34px;
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 9px; color: var(--text-muted);
-    font-size: 15px; cursor: pointer;
+    width: 34px; height: 34px; background: transparent; border: 1px solid var(--border);
+    border-radius: 9px; color: var(--text-muted); font-size: 15px; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
   }
   .btn-sm:active { background: var(--surface2); }
   .btn-sm.del:active { border-color: var(--danger); color: var(--danger); }
 
   .btn-add {
-    width: 100%;
-    background: var(--accent-dim);
-    border: 1.5px dashed rgba(74,222,128,0.35);
-    border-radius: var(--radius);
-    color: var(--accent);
-    font-family: var(--font);
-    font-size: 14px; font-weight: 500;
-    padding: 14px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin-bottom: 20px;
+    width: 100%; background: var(--accent-dim); border: 1.5px dashed rgba(74,222,128,0.35);
+    border-radius: var(--radius); color: var(--accent); font-family: var(--font);
+    font-size: 14px; font-weight: 500; padding: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px;
   }
   .btn-add:active { background: rgba(74,222,128,0.18); }
 
@@ -93,10 +74,9 @@
   .overlay.open { display: flex; }
   .modal {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 20px 20px 0 0;
-    padding: 20px 20px 40px;
-    width: 100%; max-width: 480px;
-    animation: slideUp 0.2s ease;
+    border-radius: 20px 20px 0 0; padding: 20px 20px 40px;
+    width: 100%; max-width: 480px; animation: slideUp 0.2s ease;
+    max-height: 92dvh; overflow-y: auto;
   }
   @keyframes slideUp { from{transform:translateY(50px);opacity:0} to{transform:translateY(0);opacity:1} }
   .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
@@ -105,37 +85,35 @@
   .field { margin-bottom: 15px; }
   label { font-size: 11px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px; display: block; margin-bottom: 7px; }
   input[type=text], input[type=number] {
-    width: 100%; padding: 12px 14px;
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 10px; color: var(--text);
-    font-family: var(--font); font-size: 15px;
-    outline: none;
-    -webkit-appearance: none;
+    width: 100%; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 15px;
+    outline: none; -webkit-appearance: none;
   }
   input:focus { border-color: var(--accent); }
-  input[type=date], input[type=time] {
-    width: 100%; padding: 12px 14px;
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 10px; color: var(--text);
-    font-family: var(--font-mono); font-size: 15px;
-    outline: none;
-    -webkit-appearance: none;
-    color-scheme: dark;
+  input[type=time] {
+    width: 100%; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text); font-family: var(--font-mono); font-size: 15px;
+    outline: none; -webkit-appearance: none; color-scheme: dark;
   }
-  input[type=date]:focus, input[type=time]:focus { border-color: var(--accent); }
+  input[type=time]:focus { border-color: var(--accent); }
 
   .dur-row { display: flex; gap: 8px; align-items: center; }
   .dur-row input { flex: 1; text-align: center; }
   .dur-label { font-size: 13px; color: var(--text-muted); padding: 0 2px; }
 
+  .time-row { display: flex; gap: 8px; align-items: center; }
+  .time-row input[type=time] { flex: 1; }
+  .time-clear {
+    background: transparent; border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text-muted); font-size: 12px; padding: 8px 10px; cursor: pointer; white-space: nowrap;
+    font-family: var(--font);
+  }
+  .time-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
   .color-grid { display: flex; flex-wrap: wrap; gap: 10px; }
   .color-opt {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 2.5px solid transparent;
-    cursor: pointer;
-    position: relative;
-    -webkit-appearance: none; background-color: inherit;
-    transition: transform 0.1s;
+    width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid transparent;
+    cursor: pointer; position: relative; -webkit-appearance: none; transition: transform 0.1s;
   }
   .color-opt:active { transform: scale(0.88); }
   .color-opt.selected { border-color: #fff; }
@@ -147,30 +125,68 @@
 
   .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
   .btn-cancel {
-    flex: 1; padding: 13px;
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 10px; color: var(--text-muted);
-    font-family: var(--font); font-size: 15px; cursor: pointer;
+    flex: 1; padding: 13px; background: transparent; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-muted); font-family: var(--font); font-size: 15px; cursor: pointer;
   }
   .btn-save {
-    flex: 2; padding: 13px;
-    background: var(--accent); border: none;
-    border-radius: 10px; color: #0f0f0f;
-    font-family: var(--font); font-size: 15px; font-weight: 600; cursor: pointer;
+    flex: 2; padding: 13px; background: var(--accent); border: none;
+    border-radius: 10px; color: #0f0f0f; font-family: var(--font); font-size: 15px; font-weight: 600; cursor: pointer;
   }
   .btn-save:active { opacity: 0.85; }
+  .btn-save:disabled { opacity: 0.4; }
 
   .preview-bar {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px 14px;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 10px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
   }
   .preview-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .preview-name { font-size: 14px; font-weight: 500; }
   .preview-dur { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
 
-  .hint { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; text-align: center; }
+  /* Calendar */
+  .cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .cal-month { font-size: 15px; font-weight: 500; }
+  .cal-btn {
+    background: transparent; border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); font-size: 16px; width: 34px; height: 34px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cal-btn:active { background: var(--surface2); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-dow { text-align: center; font-size: 11px; color: var(--text-muted); font-weight: 500; padding: 4px 0; }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer; border: 1.5px solid transparent; transition: all 0.1s;
+  }
+  .cal-day:active { transform: scale(0.88); }
+  .cal-day.empty { cursor: default; }
+  .cal-day.past { color: var(--text-muted); opacity: 0.35; cursor: default; pointer-events: none; }
+  .cal-day.today { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .cal-day.selected { background: var(--accent); color: #0f0f0f; font-weight: 700; border-color: var(--accent); }
+  .selected-count { font-size: 12px; color: var(--accent); font-family: var(--font-mono); margin-top: 10px; text-align: center; min-height: 18px; }
+
+  /* Step 2: day list */
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .day-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+  .day-item {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 14px; cursor: pointer; transition: border-color 0.15s;
+  }
+  .day-item:active { border-color: var(--accent); background: var(--surface2); }
+  .day-item.done { opacity: 0.4; pointer-events: none; }
+  .day-item.done .day-check { color: var(--accent); }
+  .day-label { font-family: var(--font-mono); font-size: 14px; }
+  .day-check { font-size: 18px; color: var(--border); }
+  .day-item:not(.done) .day-check { color: var(--border); }
+
+  .step2-hint { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 10px; line-height: 1.6; }
+  .back-btn {
+    background: transparent; border: none; color: var(--accent);
+    font-family: var(--font); font-size: 13px; cursor: pointer; padding: 0; margin-bottom: 16px;
+  }
 </style>
 </head>
 <body>
@@ -180,11 +196,9 @@
       <h1>Kalender-Vorlagen</h1>
       <div class="dot"></div>
     </div>
-    <p class="subtitle">Tippe auf eine Vorlage → Datum wählen → Fertig</p>
+    <p class="subtitle">Vorlage antippen → Tage wählen → Jeden öffnen</p>
   </header>
-
   <div class="templates" id="tList"></div>
-
   <button class="btn-add" onclick="openAdd()">
     <span style="font-size:18px;line-height:1">＋</span> Neue Vorlage
   </button>
@@ -194,13 +208,11 @@
 <div class="overlay" id="editOv" onclick="bgClose(event,'editOv',closeEdit)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <p class="modal-title" id="editTitle">Neue Vorlage</p>
-
+    <p class="modal-title" id="editModalTitle">Neue Vorlage</p>
     <div class="field">
       <label>Titel</label>
       <input type="text" id="iTitle" placeholder="z.B. Dienst, Meeting, Sport…" maxlength="50">
     </div>
-
     <div class="field">
       <label>Dauer</label>
       <div class="dur-row">
@@ -210,12 +222,18 @@
         <span class="dur-label">Min</span>
       </div>
     </div>
-
     <div class="field">
-      <label>Farbe (Google Kalender)</label>
+      <label>Startzeit vorbelegen (optional)</label>
+      <div class="time-row">
+        <input type="time" id="iPresetTime">
+        <button class="time-clear" onclick="document.getElementById('iPresetTime').value=''">Leer</button>
+      </div>
+      <p class="time-hint">Leer lassen = Zeit beim Anlegen eingeben.</p>
+    </div>
+    <div class="field">
+      <label>Farbe</label>
       <div class="color-grid" id="colorGrid"></div>
     </div>
-
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeEdit()">Abbrechen</button>
       <button class="btn-save" onclick="saveTpl()">Speichern</button>
@@ -223,29 +241,46 @@
   </div>
 </div>
 
-<!-- DateTime Modal -->
+<!-- Date / Multi-Day Modal -->
 <div class="overlay" id="dtOv" onclick="bgClose(event,'dtOv',closeDt)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <p class="modal-title">Termin anlegen</p>
-
     <div class="preview-bar" id="dtPreview"></div>
 
-    <div class="field">
-      <label>Datum</label>
-      <input type="date" id="iDate" color-scheme="dark">
+    <!-- Step 1: pick days + time -->
+    <div class="step active" id="step1">
+      <p class="modal-title">Tage & Zeit auswählen</p>
+      <div class="field">
+        <label>Startzeit</label>
+        <input type="time" id="iTime">
+      </div>
+      <div class="field">
+        <label>Tage auswählen</label>
+        <div class="cal-nav">
+          <button class="cal-btn" onclick="changeMonth(-1)">‹</button>
+          <span class="cal-month" id="calMonth"></span>
+          <button class="cal-btn" onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="selected-count" id="selCount"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeDt()">Abbrechen</button>
+        <button class="btn-save" onclick="goToStep2()">Weiter →</button>
+      </div>
     </div>
 
-    <div class="field">
-      <label>Startzeit</label>
-      <input type="time" id="iTime">
+    <!-- Step 2: tap each day to open in calendar -->
+    <div class="step" id="step2">
+      <p class="modal-title">Jeden Termin öffnen</p>
+      <button class="back-btn" onclick="goToStep1()">← Zurück</button>
+      <div class="day-list" id="dayList"></div>
+      <p class="step2-hint">Tippe auf jeden Tag — Google Kalender öffnet sich mit allem vorausgefüllt.<br>Danach hier zurückkommen und den nächsten antippen.</p>
+      <div class="modal-actions" style="margin-top:16px;">
+        <button class="btn-cancel" onclick="closeDt()">Fertig</button>
+      </div>
     </div>
 
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeDt()">Abbrechen</button>
-      <button class="btn-save" onclick="addToCalendar()">In Google Kalender →</button>
-    </div>
-    <p class="hint">Öffnet Google Kalender mit allen Daten vorausgefüllt.<br>Einfach noch bestätigen.</p>
   </div>
 </div>
 
@@ -264,22 +299,27 @@ const COLORS = [
   { n:'Graphit',   h:'#616161', id:'8'  },
 ];
 
-const KEY = 'kalvrl_v1';
+const KEY = 'kalvrl_v3';
 let tpls = JSON.parse(localStorage.getItem(KEY) || '[]');
 let editIdx = -1;
 let selColor = COLORS[0];
 let activeTpl = null;
+let selectedDays = new Set();
+let calYear, calMonth;
+let doneDays = new Set();
 
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const pad = n => String(n).padStart(2,'0');
 const persist = () => localStorage.setItem(KEY, JSON.stringify(tpls));
+
+const MONTH_NAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const DAY_NAMES = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 
 function durStr(h, m) {
   if (h > 0 && m > 0) return `${h} Std ${m} Min`;
   if (h > 0) return `${h} Std`;
   return `${m} Min`;
 }
-
 function colorById(id) { return COLORS.find(c => c.id === id) || COLORS[0]; }
 
 function render() {
@@ -290,13 +330,14 @@ function render() {
   }
   el.innerHTML = tpls.map((t, i) => {
     const c = colorById(t.cid);
+    const timeStr = t.presetTime ? ` · ${t.presetTime} Uhr` : '';
     return `<div class="t-card">
       <div class="color-bar" style="background:${c.h}"></div>
       <div class="t-main" onclick="openDt(${i})">
         <div class="t-title">${esc(t.title)}</div>
         <div class="t-meta">
           <div class="t-color-dot" style="background:${c.h}"></div>
-          <span>${durStr(t.h, t.m)}</span>
+          <span>${durStr(t.h, t.m)}${timeStr}</span>
         </div>
       </div>
       <div class="t-actions">
@@ -312,60 +353,95 @@ function buildColors(selId) {
     `<button class="color-opt${c.id===selId?' selected':''}" style="background:${c.h}" title="${c.n}" onclick="pickColor('${c.id}')"></button>`
   ).join('');
 }
-
 function pickColor(id) {
   selColor = colorById(id);
-  document.querySelectorAll('.color-opt').forEach((b,i) => {
-    b.classList.toggle('selected', COLORS[i].id === id);
-  });
+  document.querySelectorAll('.color-opt').forEach((b,i) => b.classList.toggle('selected', COLORS[i].id === id));
 }
-
-function bgClose(e, ovId, fn) {
-  if (e.target.id === ovId) fn();
-}
+function bgClose(e, ovId, fn) { if (e.target.id === ovId) fn(); }
 
 function openAdd() {
   editIdx = -1;
-  document.getElementById('editTitle').textContent = 'Neue Vorlage';
+  document.getElementById('editModalTitle').textContent = 'Neue Vorlage';
   document.getElementById('iTitle').value = '';
   document.getElementById('iH').value = '';
   document.getElementById('iM').value = '';
+  document.getElementById('iPresetTime').value = '';
   selColor = COLORS[0];
   buildColors(COLORS[0].id);
   document.getElementById('editOv').classList.add('open');
   setTimeout(() => document.getElementById('iTitle').focus(), 150);
 }
-
 function openEdit(i) {
   editIdx = i;
   const t = tpls[i];
-  document.getElementById('editTitle').textContent = 'Vorlage bearbeiten';
+  document.getElementById('editModalTitle').textContent = 'Vorlage bearbeiten';
   document.getElementById('iTitle').value = t.title;
   document.getElementById('iH').value = t.h;
   document.getElementById('iM').value = t.m;
+  document.getElementById('iPresetTime').value = t.presetTime || '';
   selColor = colorById(t.cid);
   buildColors(t.cid);
   document.getElementById('editOv').classList.add('open');
 }
-
 function closeEdit() { document.getElementById('editOv').classList.remove('open'); }
-
 function saveTpl() {
   const title = document.getElementById('iTitle').value.trim();
   if (!title) { document.getElementById('iTitle').focus(); return; }
   const h = parseInt(document.getElementById('iH').value) || 0;
   const m = parseInt(document.getElementById('iM').value) || 0;
   if (h === 0 && m === 0) { document.getElementById('iH').focus(); return; }
-  const tpl = { title, h, m, cid: selColor.id };
+  const presetTime = document.getElementById('iPresetTime').value || '';
+  const tpl = { title, h, m, cid: selColor.id, presetTime };
   if (editIdx === -1) tpls.push(tpl);
   else tpls[editIdx] = tpl;
   persist(); render(); closeEdit();
 }
-
 function delTpl(i) {
   if (!confirm(`"${tpls[i].title}" löschen?`)) return;
-  tpls.splice(i, 1);
-  persist(); render();
+  tpls.splice(i, 1); persist(); render();
+}
+
+// Calendar
+function initCal() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+}
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  renderCal();
+}
+function renderCal() {
+  document.getElementById('calMonth').textContent = `${MONTH_NAMES[calMonth]} ${calYear}`;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const startOffset = (firstDay + 6) % 7;
+  let html = ['Mo','Di','Mi','Do','Fr','Sa','So'].map(d => `<div class="cal-dow">${d}</div>`).join('');
+  for (let i = 0; i < startOffset; i++) html += `<div class="cal-day empty"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(calYear, calMonth, d); date.setHours(0,0,0,0);
+    const key = `${calYear}-${pad(calMonth+1)}-${pad(d)}`;
+    const isPast = date < today;
+    const isToday = date.getTime() === today.getTime();
+    const isSel = selectedDays.has(key);
+    let cls = 'cal-day';
+    if (isPast) cls += ' past';
+    else if (isSel) cls += ' selected' + (isToday ? ' today' : '');
+    else if (isToday) cls += ' today';
+    const onclick = isPast ? '' : `onclick="toggleDay('${key}')"`;
+    html += `<div class="${cls}" ${onclick}>${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+  const n = selectedDays.size;
+  document.getElementById('selCount').textContent = n === 0 ? '' : `${n} Tag${n > 1 ? 'e' : ''} ausgewählt`;
+}
+function toggleDay(key) {
+  if (selectedDays.has(key)) selectedDays.delete(key);
+  else selectedDays.add(key);
+  renderCal();
 }
 
 function openDt(i) {
@@ -373,47 +449,65 @@ function openDt(i) {
   const c = colorById(activeTpl.cid);
   document.getElementById('dtPreview').innerHTML =
     `<div class="preview-dot" style="background:${c.h}"></div>
-     <div>
-       <div class="preview-name">${esc(activeTpl.title)}</div>
-       <div class="preview-dur">${durStr(activeTpl.h, activeTpl.m)}</div>
-     </div>`;
-
-  const now = new Date();
-  document.getElementById('iDate').value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  now.setMinutes(0,0,0); now.setHours(now.getHours()+1);
-  document.getElementById('iTime').value = `${pad(now.getHours())}:00`;
-
+     <div><div class="preview-name">${esc(activeTpl.title)}</div>
+     <div class="preview-dur">${durStr(activeTpl.h, activeTpl.m)}</div></div>`;
+  if (activeTpl.presetTime) {
+    document.getElementById('iTime').value = activeTpl.presetTime;
+  } else {
+    const now = new Date(); now.setMinutes(0,0,0); now.setHours(now.getHours()+1);
+    document.getElementById('iTime').value = `${pad(now.getHours())}:00`;
+  }
+  selectedDays = new Set();
+  doneDays = new Set();
+  initCal(); renderCal();
+  showStep(1);
   document.getElementById('dtOv').classList.add('open');
 }
-
 function closeDt() {
   document.getElementById('dtOv').classList.remove('open');
-  activeTpl = null;
+  activeTpl = null; selectedDays = new Set(); doneDays = new Set();
+}
+function showStep(n) {
+  document.getElementById('step1').classList.toggle('active', n === 1);
+  document.getElementById('step2').classList.toggle('active', n === 2);
+}
+function goToStep1() { showStep(1); }
+function goToStep2() {
+  const tv = document.getElementById('iTime').value;
+  if (!tv) { document.getElementById('iTime').focus(); return; }
+  if (selectedDays.size === 0) { alert('Bitte mindestens einen Tag auswählen.'); return; }
+  buildDayList();
+  showStep(2);
 }
 
-function addToCalendar() {
-  if (!activeTpl) return;
-  const dv = document.getElementById('iDate').value;
+function buildDayList() {
   const tv = document.getElementById('iTime').value;
-  if (!dv || !tv) return;
+  const days = Array.from(selectedDays).sort();
+  const list = document.getElementById('dayList');
+  list.innerHTML = days.map(key => {
+    const [y, mo, d] = key.split('-').map(Number);
+    const date = new Date(y, mo-1, d);
+    const dayName = DAY_NAMES[date.getDay()];
+    const label = `${dayName}, ${d}.${mo}.${y}`;
+    return `<div class="day-item${doneDays.has(key)?' done':''}" id="di-${key}" onclick="openDay('${key}','${tv}')">
+      <span class="day-label">${label}</span>
+      <span class="day-check">${doneDays.has(key) ? '✓' : '→'}</span>
+    </div>`;
+  }).join('');
+}
 
-  const [y,mo,d] = dv.split('-').map(Number);
-  const [hh,mm] = tv.split(':').map(Number);
+function openDay(key, tv) {
+  if (!activeTpl) return;
+  const [y, mo, d] = key.split('-').map(Number);
+  const [hh, mm] = tv.split(':').map(Number);
   const start = new Date(y, mo-1, d, hh, mm);
   const end = new Date(start.getTime() + (activeTpl.h*60 + activeTpl.m)*60000);
-
-  const fmt = dt =>
-    `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;
-
-  const p = new URLSearchParams({
-    action: 'TEMPLATE',
-    text: activeTpl.title,
-    dates: `${fmt(start)}/${fmt(end)}`,
-    color: activeTpl.cid,
-  });
-
-  window.open(`https://calendar.google.com/calendar/render?${p}`, '_blank');
-  closeDt();
+  const fmt = dt => `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;
+  const p = new URLSearchParams({ action: 'TEMPLATE', text: activeTpl.title, dates: `${fmt(start)}/${fmt(end)}` });
+  window.location.href = `https://calendar.google.com/calendar/render?${p}`;
+  // Mark as done when user comes back
+  doneDays.add(key);
+  setTimeout(() => buildDayList(), 300);
 }
 
 render();
