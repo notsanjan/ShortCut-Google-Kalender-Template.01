@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0f0f0f">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Kalender-Vorlagen</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #262626;
+    --border: #2e2e2e;
+    --accent: #4ade80;
+    --accent-dim: rgba(74,222,128,0.10);
+    --text: #f0f0f0;
+    --text-muted: #777;
+    --danger: #f87171;
+    --radius: 14px;
+    --font-mono: 'DM Mono', monospace;
+    --font: 'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100dvh;
+    padding-bottom: 32px;
+  }
+  .app { max-width: 480px; margin: 0 auto; padding: 28px 16px 16px; }
+
+  header { margin-bottom: 28px; }
+  .header-row { display: flex; align-items: center; justify-content: space-between; }
+  h1 { font-family: var(--font-mono); font-size: 17px; font-weight: 500; letter-spacing: -0.2px; }
+  .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: blink 2.5s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 5px; font-weight: 300; }
+
+  .templates { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+
+  .t-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 14px;
+    position: relative; overflow: hidden;
+  }
+  .t-card:active { background: var(--surface2); }
+  .color-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 14px 0 0 14px; }
+  .t-main { flex: 1; min-width: 0; padding-left: 4px; cursor: pointer; }
+  .t-title { font-size: 15px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+  .t-meta { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+  .t-color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .t-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .btn-sm {
+    width: 34px; height: 34px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 9px; color: var(--text-muted);
+    font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-sm:active { background: var(--surface2); }
+  .btn-sm.del:active { border-color: var(--danger); color: var(--danger); }
+
+  .btn-add {
+    width: 100%;
+    background: var(--accent-dim);
+    border: 1.5px dashed rgba(74,222,128,0.35);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-family: var(--font);
+    font-size: 14px; font-weight: 500;
+    padding: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .btn-add:active { background: rgba(74,222,128,0.18); }
+
+  .empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; line-height: 1.8; }
+  .empty-icon { font-size: 36px; margin-bottom: 12px; }
+
+  /* Modals */
+  .overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.72); backdrop-filter: blur(4px);
+    z-index: 100; align-items: flex-end; justify-content: center;
+  }
+  .overlay.open { display: flex; }
+  .modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px 40px;
+    width: 100%; max-width: 480px;
+    animation: slideUp 0.2s ease;
+  }
+  @keyframes slideUp { from{transform:translateY(50px);opacity:0} to{transform:translateY(0);opacity:1} }
+  .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
+  .modal-title { font-family: var(--font-mono); font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+
+  .field { margin-bottom: 15px; }
+  label { font-size: 11px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px; display: block; margin-bottom: 7px; }
+  input[type=text], input[type=number] {
+    width: 100%; padding: 12px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: var(--font); font-size: 15px;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input:focus { border-color: var(--accent); }
+  input[type=date], input[type=time] {
+    width: 100%; padding: 12px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: var(--font-mono); font-size: 15px;
+    outline: none;
+    -webkit-appearance: none;
+    color-scheme: dark;
+  }
+  input[type=date]:focus, input[type=time]:focus { border-color: var(--accent); }
+
+  .dur-row { display: flex; gap: 8px; align-items: center; }
+  .dur-row input { flex: 1; text-align: center; }
+  .dur-label { font-size: 13px; color: var(--text-muted); padding: 0 2px; }
+
+  .color-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .color-opt {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2.5px solid transparent;
+    cursor: pointer;
+    position: relative;
+    -webkit-appearance: none; background-color: inherit;
+    transition: transform 0.1s;
+  }
+  .color-opt:active { transform: scale(0.88); }
+  .color-opt.selected { border-color: #fff; }
+  .color-opt.selected::after {
+    content: '✓'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 700;
+  }
+
+  .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
+  .btn-cancel {
+    flex: 1; padding: 13px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-muted);
+    font-family: var(--font); font-size: 15px; cursor: pointer;
+  }
+  .btn-save {
+    flex: 2; padding: 13px;
+    background: var(--accent); border: none;
+    border-radius: 10px; color: #0f0f0f;
+    font-family: var(--font); font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .btn-save:active { opacity: 0.85; }
+
+  .preview-bar {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .preview-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .preview-name { font-size: 14px; font-weight: 500; }
+  .preview-dur { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+
+  .hint { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; text-align: center; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="header-row">
+      <h1>Kalender-Vorlagen</h1>
+      <div class="dot"></div>
+    </div>
+    <p class="subtitle">Tippe auf eine Vorlage → Datum wählen → Fertig</p>
+  </header>
+
+  <div class="templates" id="tList"></div>
+
+  <button class="btn-add" onclick="openAdd()">
+    <span style="font-size:18px;line-height:1">＋</span> Neue Vorlage
+  </button>
+</div>
+
+<!-- Edit Modal -->
+<div class="overlay" id="editOv" onclick="bgClose(event,'editOv',closeEdit)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <p class="modal-title" id="editTitle">Neue Vorlage</p>
+
+    <div class="field">
+      <label>Titel</label>
+      <input type="text" id="iTitle" placeholder="z.B. Dienst, Meeting, Sport…" maxlength="50">
+    </div>
+
+    <div class="field">
+      <label>Dauer</label>
+      <div class="dur-row">
+        <input type="number" id="iH" placeholder="0" min="0" max="48">
+        <span class="dur-label">Std</span>
+        <input type="number" id="iM" placeholder="0" min="0" max="59">
+        <span class="dur-label">Min</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Farbe (Google Kalender)</label>
+      <div class="color-grid" id="colorGrid"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeEdit()">Abbrechen</button>
+      <button class="btn-save" onclick="saveTpl()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- DateTime Modal -->
+<div class="overlay" id="dtOv" onclick="bgClose(event,'dtOv',closeDt)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <p class="modal-title">Termin anlegen</p>
+
+    <div class="preview-bar" id="dtPreview"></div>
+
+    <div class="field">
+      <label>Datum</label>
+      <input type="date" id="iDate" color-scheme="dark">
+    </div>
+
+    <div class="field">
+      <label>Startzeit</label>
+      <input type="time" id="iTime">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDt()">Abbrechen</button>
+      <button class="btn-save" onclick="addToCalendar()">In Google Kalender →</button>
+    </div>
+    <p class="hint">Öffnet Google Kalender mit allen Daten vorausgefüllt.<br>Einfach noch bestätigen.</p>
+  </div>
+</div>
+
+<script>
+const COLORS = [
+  { n:'Tomate',    h:'#d50000', id:'11' },
+  { n:'Flamingo',  h:'#e67c73', id:'4'  },
+  { n:'Mandarine', h:'#f4511e', id:'6'  },
+  { n:'Banane',    h:'#f6bf26', id:'5'  },
+  { n:'Salbei',    h:'#33b679', id:'2'  },
+  { n:'Basilikum', h:'#0b8043', id:'10' },
+  { n:'Pfau',      h:'#039be5', id:'7'  },
+  { n:'Blaubeere', h:'#3f51b5', id:'9'  },
+  { n:'Lavendel',  h:'#7986cb', id:'1'  },
+  { n:'Traube',    h:'#8e24aa', id:'3'  },
+  { n:'Graphit',   h:'#616161', id:'8'  },
+];
+
+const KEY = 'kalvrl_v1';
+let tpls = JSON.parse(localStorage.getItem(KEY) || '[]');
+let editIdx = -1;
+let selColor = COLORS[0];
+let activeTpl = null;
+
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const pad = n => String(n).padStart(2,'0');
+const persist = () => localStorage.setItem(KEY, JSON.stringify(tpls));
+
+function durStr(h, m) {
+  if (h > 0 && m > 0) return `${h} Std ${m} Min`;
+  if (h > 0) return `${h} Std`;
+  return `${m} Min`;
+}
+
+function colorById(id) { return COLORS.find(c => c.id === id) || COLORS[0]; }
+
+function render() {
+  const el = document.getElementById('tList');
+  if (!tpls.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">🗓️</div>Noch keine Vorlagen.<br>Lege deine erste an!</div>`;
+    return;
+  }
+  el.innerHTML = tpls.map((t, i) => {
+    const c = colorById(t.cid);
+    return `<div class="t-card">
+      <div class="color-bar" style="background:${c.h}"></div>
+      <div class="t-main" onclick="openDt(${i})">
+        <div class="t-title">${esc(t.title)}</div>
+        <div class="t-meta">
+          <div class="t-color-dot" style="background:${c.h}"></div>
+          <span>${durStr(t.h, t.m)}</span>
+        </div>
+      </div>
+      <div class="t-actions">
+        <button class="btn-sm" onclick="openEdit(${i})">✎</button>
+        <button class="btn-sm del" onclick="delTpl(${i})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildColors(selId) {
+  document.getElementById('colorGrid').innerHTML = COLORS.map(c =>
+    `<button class="color-opt${c.id===selId?' selected':''}" style="background:${c.h}" title="${c.n}" onclick="pickColor('${c.id}')"></button>`
+  ).join('');
+}
+
+function pickColor(id) {
+  selColor = colorById(id);
+  document.querySelectorAll('.color-opt').forEach((b,i) => {
+    b.classList.toggle('selected', COLORS[i].id === id);
+  });
+}
+
+function bgClose(e, ovId, fn) {
+  if (e.target.id === ovId) fn();
+}
+
+function openAdd() {
+  editIdx = -1;
+  document.getElementById('editTitle').textContent = 'Neue Vorlage';
+  document.getElementById('iTitle').value = '';
+  document.getElementById('iH').value = '';
+  document.getElementById('iM').value = '';
+  selColor = COLORS[0];
+  buildColors(COLORS[0].id);
+  document.getElementById('editOv').classList.add('open');
+  setTimeout(() => document.getElementById('iTitle').focus(), 150);
+}
+
+function openEdit(i) {
+  editIdx = i;
+  const t = tpls[i];
+  document.getElementById('editTitle').textContent = 'Vorlage bearbeiten';
+  document.getElementById('iTitle').value = t.title;
+  document.getElementById('iH').value = t.h;
+  document.getElementById('iM').value = t.m;
+  selColor = colorById(t.cid);
+  buildColors(t.cid);
+  document.getElementById('editOv').classList.add('open');
+}
+
+function closeEdit() { document.getElementById('editOv').classList.remove('open'); }
+
+function saveTpl() {
+  const title = document.getElementById('iTitle').value.trim();
+  if (!title) { document.getElementById('iTitle').focus(); return; }
+  const h = parseInt(document.getElementById('iH').value) || 0;
+  const m = parseInt(document.getElementById('iM').value) || 0;
+  if (h === 0 && m === 0) { document.getElementById('iH').focus(); return; }
+  const tpl = { title, h, m, cid: selColor.id };
+  if (editIdx === -1) tpls.push(tpl);
+  else tpls[editIdx] = tpl;
+  persist(); render(); closeEdit();
+}
+
+function delTpl(i) {
+  if (!confirm(`"${tpls[i].title}" löschen?`)) return;
+  tpls.splice(i, 1);
+  persist(); render();
+}
+
+function openDt(i) {
+  activeTpl = tpls[i];
+  const c = colorById(activeTpl.cid);
+  document.getElementById('dtPreview').innerHTML =
+    `<div class="preview-dot" style="background:${c.h}"></div>
+     <div>
+       <div class="preview-name">${esc(activeTpl.title)}</div>
+       <div class="preview-dur">${durStr(activeTpl.h, activeTpl.m)}</div>
+     </div>`;
+
+  const now = new Date();
+  document.getElementById('iDate').value = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  now.setMinutes(0,0,0); now.setHours(now.getHours()+1);
+  document.getElementById('iTime').value = `${pad(now.getHours())}:00`;
+
+  document.getElementById('dtOv').classList.add('open');
+}
+
+function closeDt() {
+  document.getElementById('dtOv').classList.remove('open');
+  activeTpl = null;
+}
+
+function addToCalendar() {
+  if (!activeTpl) return;
+  const dv = document.getElementById('iDate').value;
+  const tv = document.getElementById('iTime').value;
+  if (!dv || !tv) return;
+
+  const [y,mo,d] = dv.split('-').map(Number);
+  const [hh,mm] = tv.split(':').map(Number);
+  const start = new Date(y, mo-1, d, hh, mm);
+  const end = new Date(start.getTime() + (activeTpl.h*60 + activeTpl.m)*60000);
+
+  const fmt = dt =>
+    `${dt.getFullYear()}${pad(dt.getMonth()+1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;
+
+  const p = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: activeTpl.title,
+    dates: `${fmt(start)}/${fmt(end)}`,
+    color: activeTpl.cid,
+  });
+
+  window.open(`https://calendar.google.com/calendar/render?${p}`, '_blank');
+  closeDt();
+}
+
+render();
+</script>
+</body>
+</html>
